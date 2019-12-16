@@ -11,7 +11,7 @@ import Search from './pages/search';
 import Login from './components/auth/Login';
 import Signup from './components/auth/Register';
 import Contact from './pages/contact';
-
+import Profile from './components/profile/Profile'
 
 
 // Private Routes
@@ -31,6 +31,7 @@ const Router = () => {
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
             <Route path='/contact' component={Contact} />
+            <Route path='/:username' component={Profile} />
             <Route path='*' component={PageNotFound} />
           </Switch>
     </>
