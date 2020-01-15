@@ -1,7 +1,7 @@
 import React, {useReducer, useContext} from 'react';
 import PostContext from './postContext';
 import postReducer from './postReducer';
-import { UPDATE_LAST_POST, SET_POSTS, FIND_FOLLOWING_POSTS, REMOVE_POST, GET_VIEWING_POSTS, CLEAR_POST_STATE } from '../types'
+import { UPDATE_LAST_POST, SET_POSTS, FIND_FOLLOWING_POSTS, REMOVE_POST, GET_VIEWING_POSTS, CLEAR_POST_STATE, UPDATE_POSTS, UPDATE_LIKES } from '../types'
 import AuthContext from '../auth/authContext';
 import ProfileContext from '../profile/profileContext'
 
@@ -15,7 +15,7 @@ const config = {
 
 const PostState = props => {
     const initialState = {
-        myPosts: [],
+        myPosts: null,  // null or []?
         lastPost: null,
         followingPosts: null, // to use on newsfeed for getting array of date sorted posts
         viewingPosts: null,
@@ -32,12 +32,23 @@ const PostState = props => {
     const makePost = async (formData) => {
         // console.log(formData.get('postTitle'));  // <-- can use this to see is formData has a certain field
         const response = await request.post('/api/posts/create-post', formData, config);
-        console.log('This is the post:', response.data);
+        console.log('This is the new post:', response.data);
+
         dispatch({
-            type: UPDATE_LAST_POST,
+            type: UPDATE_POSTS,
             payload: response.data
         })
-        getUserPosts();
+    }
+
+    const like = async (id) => {
+        const res = await request.put(`/api/posts/like/${id}`);
+        console.log('The new likes array', res.data);
+
+        dispatch({
+            type: UPDATE_LIKES,
+            payload: { id, likes: res.data }
+        })
+        
     }
 
     const getUserPosts = async () => {

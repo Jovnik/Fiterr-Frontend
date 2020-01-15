@@ -1,5 +1,4 @@
 import React, { useReducer, useContext } from 'react';
-import axios from 'axios';
 import AuthContext from './authContext';
 import authReducer from './authReducer';
 
@@ -32,6 +31,7 @@ const AuthState = props => {
     // get setAlert method from Alert Context
     const alertContext = useContext(AlertContext);
     const { setAlert } = alertContext;
+
    
     // Load user
     const loadUser = async () => {
@@ -137,7 +137,7 @@ const AuthState = props => {
             loadUser,
             login,
             logout,
-            clearErrors
+            clearErrors,
          }}>
             { props.children }
         </AuthContext.Provider>
