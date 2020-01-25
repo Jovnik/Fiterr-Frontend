@@ -21,7 +21,7 @@ const ProfileBodyTimeline = ({ profile }) => {
   useEffect(() => {
     getPosts(_id);
     return () => {
-      console.log('unmounting of the PROFILE BODY TIMELINE component')
+      // console.log('unmount')
       clearPostState();
     }
     // eslint-disable-next-line

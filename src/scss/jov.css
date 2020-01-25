@@ -178,3 +178,23 @@
 .liked-true {
     background-color: #FD7800;
 }
+
+
+/* New Spinner */
+.loader {
+    display: block;
+    /* margin: auto; */
+    border: 0.5rem solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 0.5rem solid #FD7800;
+    width: 3rem;
+    height: 3rem;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+  
