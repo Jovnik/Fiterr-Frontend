@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
@@ -19,41 +19,36 @@ const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUs
 
     const { _id: userId, firstname, lastname, profile: { displayImage }} = postOwnerUser;
 
+    const dropdownEl = useRef(null);
     const { like, unlike, removePost } = useContext(PostContext);
     const { profile: myprofile } = useContext(ProfileContext);
 
     // check if we have liked it or not
     const [liked, setLiked] = useState(likes.map(like => like.user).includes(myprofile.user._id));
-    console.log(liked);
-
-    console.log('render timeline post');
 
     const onLikeClick = () => {
       if (liked) {
         unlike(_id);
-        console.log('unliking');
         setLiked(false);
       } else {
         like(_id)
-        console.log('liking');
         setLiked(true);
       }
     }
 
-    // eslint-disable-next-line
     const postOptionsDropdownHandler = (e) => {
-      const element = document.getElementById("post-options-dropdown");
-      if (element.style.display === "none") {
-        element.style.display = "flex";
-      } else if (element.style.display === "flex") {
-        element.style.display = "none";
+      // console.log(dropdownEl);
+
+      if (dropdownEl.current.style.display === "none") {
+        dropdownEl.current.style.display = "flex";
+      } else if (dropdownEl.current.style.display === "flex") {
+        dropdownEl.current.style.display = "none";
       }
     };
-  
+
     // eslint-disable-next-line
     const postOptionsDropdownRemove = (e) => {
-      const menu = e.target.parentNode.childNodes[1]
-      menu.style.display = "none"
+      dropdownEl.current.style.display = "none";
     }
 
     return (
@@ -81,18 +76,18 @@ const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUs
             </div>
               { myprofile.user._id === userId && 
               (<div className="post-options">
-                  <i onClick={() => removePost(_id)} className="fas fa-trash"></i>
-                {/* <button type="button" className="btn-post-options" onClick={postOptionsDropdownHandler} onBlur={postOptionsDropdownRemove} >
+                {/* <button type="button" className="btn-post-options" onClick={postOptionsDropdownHandler} onBlur={postOptionsDropdownRemove} > */}
+                <button type="button" className="btn-post-options" onClick={postOptionsDropdownHandler} >
                   <i className="fas fa-ellipsis-h"></i>
                 </button>
-                <div id="post-options-dropdown" style={{display: "none"}} className="options-dropdown-wrapper caret">
+                <div id="post-options-dropdown" ref={dropdownEl} style={{display: "none"}} className="options-dropdown-wrapper caret">
                   <div className="options-dropdown">
                     <ul>
                       <li>edit post</li>
                       <li onClick={() => removePost(_id)}>delete post</li>
                     </ul>
                   </div>
-                </div> */}
+                </div>
               </div>)}
           </div>
           <div className="body">

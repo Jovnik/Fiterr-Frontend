@@ -13,6 +13,7 @@ import pageImg3 from '../assets/media/logo-28_day_kickstart-1080x1080.png';
 
 const ProfileLeftNav = () => {
 
+  // need to fetch the username as well from the backend
     const { profile: { user: { firstname, lastname }, displayImage } } = useContext(ProfileContext);
 
     return (
@@ -48,7 +49,7 @@ const ProfileLeftNav = () => {
               <i className="fas fa-tachometer-alt"></i><h3> dashboard </h3>
             </div>
           </Link>
-          <Link to='/' className="nav-item-wrapper">
+          <Link to='/newsfeed' className="nav-item-wrapper">
             <div className="nav-item menu-btn">
               <i className="fas fa-newspaper"></i><h3> newsfeed </h3>
             </div>
