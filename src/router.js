@@ -14,6 +14,8 @@ import Contact from './pages/contact';
 import Newsfeed from './pages/newsfeed';
 import Messages from './pages/messages';
 
+import UpdateInfo from './components/profile/UpdateInfo';
+
 import Profile from './pages/profile';
 import Page from './components/properPage/Page'
 import PackageCreate from './components/properPage/packages/PackageCreate'
@@ -39,7 +41,6 @@ const Router = () => {
     <>
           <Switch>
             <Route exact path='/' component={Homepage} />
-            {/* <PrivateRoute exact path = '/profile/:username' component={Profile} /> */}
             <PrivateRoute exact path = '/create-profile' component={ProfileSetup}/>
             <PrivateRoute exact path = '/newsfeed' component={Newsfeed}/>
             <PrivateRoute exact path = '/private' component={PrivatePage} />
@@ -57,12 +58,14 @@ const Router = () => {
             
             {/* <Route path='/draftprofile' component={draftProfile} /> */}
             {/* <Route path='/draftnewsfeed' component={draftNewsfeed} /> */}
+            {/* <Route path='/draftpage' component={draftPage} /> */}
             
             <Route path='/professionals' component={Professionals} />
             <Route path='/search' component={Search} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={Signup} />
             <Route path='/contact' component={Contact} />
+            <Route path='/:username/edit' component={UpdateInfo} />
             <Route path='/:username' component={Profile} />
             <Route path='*' component={PageNotFound} />
           </Switch>

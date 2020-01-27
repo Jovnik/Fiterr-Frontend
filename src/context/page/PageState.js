@@ -33,7 +33,7 @@ const PageState = props => {
         currentPackage: null,
         lastCharge: null,
         trainers: null,
-        section: 'Home'
+        section: 'home'
     }
 
     const [state, dispatch] = useReducer(pageReducer, initialState)

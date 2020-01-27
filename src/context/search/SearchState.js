@@ -32,18 +32,21 @@ const SearchState = props => {
         }
     }
 
-    const searchUsers = async(searchTerm) => {
+    const searchUsers = async(searchTerm, filter) => {
 
         try {
             dispatch({
                 type: SEARCHING_FOR_RESULTS
             })
 
-            const res = await request.post('/api/users/search-users', searchTerm, config);
-            console.log('users data is here', res.data.searchedUsers);
+            console.log('searching', searchTerm, filter);
+
+            const res = await request.post('/api/users/search', { searchTerm, filter }, config);
+            
+            console.log('Searched data is here', res.data);
 
             const payload = { 
-                searchedUsers: res.data.searchedUsers,
+                searchedUsers: res.data,
                 // searchTerm: searchTerm.search
             }
 

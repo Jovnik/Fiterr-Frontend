@@ -6,6 +6,7 @@ import {
     GET_POSTS,
     GET_NEWSFEED,
     REMOVE_POST, 
+    EDIT_POST,
     UPDATE_POSTS, 
     UPDATE_LIKES, 
     ADD_COMMENT, 
@@ -37,7 +38,6 @@ const PostState = props => {
 
     // WORKS
     const makePost = async (formData) => {
-        // console.log(formData.get('postTitle'));  // <-- can use this to see is formData has a certain field
         const response = await request.post('/api/posts/create-post', formData, config);
         console.log('This is the new post:', response.data);
 
@@ -100,9 +100,19 @@ const PostState = props => {
         })
     }
 
+    // edit the post
+    const editPost = async (id, text) => {
+
+        await request.put(`/api/posts/${id}/edit`, text, config)
+
+        dispatch({
+            type: EDIT_POST,
+            payload: { editedText: text.editText, postId: id }
+        })
+    }
+
     // Like a post
-    // WORKS
-        const like = async (postId) => {
+    const like = async (postId) => {
         console.log('post Id', postId);
         const res = await request.put(`/api/posts/like/${postId}`);
 
@@ -116,7 +126,6 @@ const PostState = props => {
     }
 
     // Unlike a post
-    // WORKS
     const unlike = async (postId) => {
         const res = await request.put(`/api/posts/unlike/${postId}`);
 
@@ -271,6 +280,7 @@ const PostState = props => {
                 makePost,
                 getPosts,
                 removePost,
+                editPost,
                 clearPostState,
                 like,
                 unlike,

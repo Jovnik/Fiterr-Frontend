@@ -32,6 +32,36 @@ export const placeholderText = (username, myusername) => {
     if(username === myusername) {
         return 'Share something with your followers ...';
     } else {
-        return 'Post to PERSONS timeline';
+        return 'Post to timeline';
+        // return 'Post to PERSONS timeline';
+    }
+}
+
+export const createNumberArr = (n) => {
+    let arr = [];
+    for(let i=1; i <= n; i++) {
+        arr.push(i);
+    }
+    return arr;
+}
+
+// /kenny/about     about
+export const inSection = (location, section) => {
+    const urlSection = location.pathname.split('/')[2];
+    // console.log('urlsection', urlSection);
+    
+    if(section === 'stream'){
+        if(urlSection === section){ 
+            return true 
+        }
+        else if (!urlSection) { 
+            return true 
+        }
+        else if(urlSection !== 'about' && urlSection !== 'following' && urlSection !== 'photos' && urlSection !== 'services') { 
+            return true 
+        }
+        else { return false }
+    } else {
+        return (section === urlSection);
     }
 }

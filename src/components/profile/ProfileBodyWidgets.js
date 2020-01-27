@@ -1,8 +1,13 @@
 import React, { Fragment } from 'react'
+import FollowersWidget from './FollowersWidget';
+import PhotosWidget from './PhotosWidget';
 
 const ProfileBodyWidgets = ({ profile }) => {
-  // console.log('widgets', profile)
-  const{ user: { firstname }, aboutMe, followers } = profile;
+
+  const{ user: { firstname }, following, aboutMe, followers, images } = profile;
+
+  // console.log('yoooooooooo', following);
+
     return (
       <Fragment>
         {/* RIGHT COL - PROFILE INFO WIDGETS */}
@@ -28,36 +33,10 @@ const ProfileBodyWidgets = ({ profile }) => {
               </div>
               {/* <div className="body no-info">
                 <p>nothing to display</p>
-              </div> */}
-              <div className="body thumbnails">
-                <div className="thumbnail-widget">
-                  <i className="fas fa-user"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-user"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-user"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-user"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-user"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-user"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-user"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-user"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-user"></i>
-                </div>
-              </div>
+              </div> */}              
+              <FollowersWidget following={following} />
+              
+
             </div>
             <div className="widget-wrapper">
               <div className="header">
@@ -69,35 +48,8 @@ const ProfileBodyWidgets = ({ profile }) => {
               {/* <div className="body no-info">
                 <p>nothing to display</p>
               </div> */}
-              <div className="body thumbnails">
-                <div className="thumbnail-widget">
-                  <i className="fas fa-camera"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-camera"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-camera"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-camera"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-camera"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-camera"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-camera"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-camera"></i>
-                </div>
-                <div className="thumbnail-widget">
-                  <i className="fas fa-camera"></i>
-                </div>
-              </div>
+              <PhotosWidget images={images}/>
+
             </div>
           </div>
         </div>

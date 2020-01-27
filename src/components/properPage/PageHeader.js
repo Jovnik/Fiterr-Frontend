@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import PageBodyServices from './PageBodyServices'
+import PageBodyTimeline from './PageBodyTimeline';
+import PageBodyAbout from './PageBodyAbout';
+import PageBodyTrainers from './PageBodyTrainers';
+import PageBodyPhotos from './PageBodyPhotos';
 import coverImage from '../../components/assets/media/sports-bike.jpg';
+
+import { useRouteMatch } from 'react-router-dom';
+
+import PageContext from '../../context/page/pageContext';
 
 const PageHeader = (props) => {
     const {currentPage, pageRole} = props
+
+    const { path } = useRouteMatch();
+    console.log('The path', path);
+
+    const { section } = useContext(PageContext);
+    console.log('the section is', section)
 
     return (
       <div className="col-profile">
@@ -19,6 +33,7 @@ const PageHeader = (props) => {
               <img src={coverImage} alt=""/>
             </div>
           </div>
+
           <div className="page-actions-container">
             <div className="page-actions-wrapper">
               <button type="button" value="">
@@ -27,13 +42,25 @@ const PageHeader = (props) => {
                 <i className="fas fa-caret-down"></i>
               </ button>
             </div>
+            
           </div>
         </div>
-        {/* <PageBodyTimeline /> */}
-        {/* <PageBodyAbout /> */}
-        <PageBodyServices currentPage={currentPage} pageRole={pageRole}/>
-        {/* <PageBodyTrainers /> */}
-        {/* <PageBodyPhotos /> */}
+
+
+        {/* <Switch>
+          <Route exact path={`${path}/dashboard`} component={PageBodyTimeline} />
+          <Route exact path={`${path}/about`} component={PageBodyAbout} />
+          <Route exact path={`${path}/services`} render={props => <PageBodyServices currentPage={currentPage} pageRole={pageRole} />} />
+          <Route exact path={`${path}/trainers`} component={PageBodyTrainers} />
+          <Route exact path={`${path}/photos`} component={PageBodyPhotos} />
+          <Route exact path={`${path}/*`} component={PageBodyPhotos} />
+        </Switch> */}
+
+        { section==='home' && <PageBodyTimeline page={currentPage} />}
+        { section==='about' && <PageBodyAbout />}
+        { section==='services' && <PageBodyServices currentPage={currentPage} pageRole={pageRole}/> }
+        { section==='trainers' && <PageBodyTrainers />}
+        { section==='photos' && <PageBodyPhotos />}
       </div>
     )
 };

@@ -1,5 +1,4 @@
-import TextareaAutosize from 'react-autosize-textarea';
-import React, {Fragment, useContext} from 'react';
+import React, {useContext} from 'react';
 
 import Posts from './Posts';
 import NewPost from './NewPost'

@@ -47,6 +47,20 @@ const ProfileState = props => {
         });
     }
 
+    const editProfile = async (formData, history, username) => {
+        for (const pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
+
+        const response = await request.put('/api/profiles/edit', formData, config)
+        console.log('The edited profile', response.data);
+        dispatch({
+            type: SET_PROFILE,
+            payload: response.data
+        })
+        history.push(`/${username}`);
+    }
+
     // is this to get my profile or another users? - gets mine, should rename to getMyProfile
     const getMyProfile = async () => {
         const response = await request.get(`/api/profiles/me`);
@@ -131,6 +145,7 @@ const ProfileState = props => {
                 otherProfile: state.otherProfile,
                 fetchingProfile: state.fetchingProfile,
                 makeProfile,
+                editProfile,
                 getMyProfile,
                 getOtherProfile,
                 clearProfile,

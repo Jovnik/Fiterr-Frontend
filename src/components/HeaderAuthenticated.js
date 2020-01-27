@@ -21,7 +21,7 @@ const HeaderAuthenticated = () => {
   const profileContext = useContext(ProfileContext)
   const postContext = useContext(PostContext)
 
-  const { searchUsers, clearViewingUser, clearSearchState } = searchContext;
+  const { searchUsers, clearSearchState } = searchContext;
   const { logout, user } = authContext;
   const { profile, clearProfile } = profileContext;
   const { clearPostState } = postContext;
@@ -50,10 +50,17 @@ const HeaderAuthenticated = () => {
 
   const searchFormSubmit = (e) => {
     e.preventDefault();
-    clearViewingUser();
-    searchUsers({ search });
-    setSearch('');
-    history.push(`/search?query=${search}`);
+
+    if(search === ''){
+      // set an alert here
+      console.log('alert to actually search something')
+    } else {
+      searchUsers(search, 'all');
+      setSearch('');
+      history.push(`/search`);
+    }
+    // clearViewingUser();
+
   }
 
   return (

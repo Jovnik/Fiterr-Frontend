@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, Fragment } from 'react'
+import React, { useContext, useEffect, Fragment } from 'react'
 import PageBodyTimelineColumn from './PageBodyTimelineColumn'
 import PageBodyWidgets from './PageBodyWidgets'
 import StickyBox from "react-sticky-box";
@@ -24,6 +24,7 @@ const PageBodyTimeline = () => {
       return () => {
         clearPostState();
       }
+      // eslint-disable-next-line
     }, [])
 
     if(!posts) {
@@ -37,10 +38,10 @@ const PageBodyTimeline = () => {
       return (
         <div className="profile-body-container">
           {/* LEFT COL - PROFILE TIMELINE */}
-          <PageBodyTimelineColumn posts={posts} />
+          <PageBodyTimelineColumn posts={posts} page={currentPage}/>
           {/* RIGHT COL - PROFILE INFO WIDGETS */}
           <StickyBox offsetTop={70} offsetBottom={0}>
-            <PageBodyWidgets />
+            <PageBodyWidgets page={currentPage} />
           </StickyBox>
         </div>
       )

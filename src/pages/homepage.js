@@ -14,7 +14,6 @@ const Homepage = () => {
           </video>
         </div>
       </section>
-      <h1>Home page video is played</h1>
     </>
   )
 };

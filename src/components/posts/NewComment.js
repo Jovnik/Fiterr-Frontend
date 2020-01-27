@@ -4,13 +4,24 @@ import TextareaAutosize from 'react-autosize-textarea';
 import PostContext from '../../context/post/postContext';
 import ProfileContext from '../../context/profile/profileContext';
 
+import stockIMG from '../assets/media/stockIMG.jpg'
 
-const NewComment = ({ postId }) => {
 
+const NewComment = ({ postId, page }) => {
+
+    
     const { addComment } = useContext(PostContext);
     const { profile: { displayImage } } = useContext(ProfileContext);
-    
 
+    let img;
+    if(page){
+        if(page.displayImage) { img = page.displayImage }
+        else { img = stockIMG }
+    } else {
+        if(displayImage) { img = displayImage }
+        else { img = stockIMG }
+    }
+    
     const [text, setText] = useState('');
 
     const onSubmitComment = e => {
@@ -24,7 +35,7 @@ const NewComment = ({ postId }) => {
         <div className="post-comment-form-wrapper">
             <div className="post-comment-form">
             <div className="form-image">
-                <img src={displayImage} alt=""/>
+                <img src={img} alt=""/>
             </div>
             <div className="form-field">
                 <form>

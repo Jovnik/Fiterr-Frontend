@@ -1,26 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const SearchItem = ({ user }) => {
-    console.log('Search item user:', user);
+import stockIMG from '../assets/media/stockIMG.jpg'
 
-    const { username, _id } = user;
+const SearchItem = ({ user: {firstname, lastname, username, profile} } ) => {
 
-    // check if a username exists, cause that will be the :id param for the profile route, otherwise it will be the user _id
-    // console.log(username, _id);
+    
+    let imgSrc = stockIMG;
+    if(profile && profile.displayImage) { imgSrc = profile.displayImage };
+    
+    console.log('RIP KOBE');
 
-    let id;
-    if(username) {
-        id = username;
-    } else {
-        id = _id;
-    }
-
-    // console.log('We have the id:', id);
+    // const { displayImage } = profile;
+    // console.log('Search item user:', user);
+    // const { username, _id } = user;
 
     return (
-        <div>
-            <Link to={`/${id}`}>{user.firstname} {user.lastname}</Link>
+        <div className="search-item-result">
+            <img src={imgSrc} style={{ height: '100%', borderRadius: '50%'}} alt=""/>
+            <Link to={`/${username}`}>{firstname} {lastname}</Link>
         </div>
     )
 }
