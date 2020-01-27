@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
 
 import stockIMG from '../assets/media/stockIMG.jpg';
-
 
 import PostContext from '../../context/post/postContext';
 import AuthContext from '../../context/auth/authContext';
@@ -12,11 +10,10 @@ import PageContext from '../../context/page/pageContext';
 const NewPost = () => {
   
   const { makePost } = useContext(PostContext);
+  // eslint-disable-next-line
   const { user: { username: myusername } } = useContext(AuthContext);
-  const { currentPage: { displayImage, _id } } = useContext(PageContext);
-  
-  const { username } = useParams();
-  
+  const { currentPage: { displayImage, _id, pageTitle } } = useContext(PageContext);
+    
   const [post, setPost] = useState({postDescription: '', image: null});
   const { postDescription, image } = post
 
@@ -34,8 +31,6 @@ const NewPost = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault(); // dont need this because onSubmit is not in the form element
-
-    console.log('---', postDescription, image, _id);
 
     let body = new FormData();
     body.append('postDescription', postDescription)
@@ -66,7 +61,7 @@ const NewPost = () => {
           <img src={displayImage ? displayImage : stockIMG} alt=""/>
         </div>
         <div className="post-input-field">
-          <textarea onChange={onChange} type="textarea" name="post" rows="3" autoComplete="off" placeholder='Post on behalf of Page' value={postDescription} required/>
+          <textarea onChange={onChange} type="textarea" name="post" rows="3" autoComplete="off" placeholder={`post on behalf of ${pageTitle}`} value={postDescription} required/>
         </div>
       </div>
       <div className="post-box-actions">

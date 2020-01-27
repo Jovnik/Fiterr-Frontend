@@ -50,7 +50,7 @@ const PostReply = ({ reply: { _id, text, likes, user }, postId, commentId }) => 
             { userId === myprofile.user._id && (
                   <Fragment>
                     <span className="space-dot">&middot;</span>
-                    <span onClick={() => removeReply(postId, commentId, _id)} className="action"> remove reply </span>
+                    <span onClick={() => removeReply(postId, commentId, _id)} className="action"> remove </span>
                   </Fragment>
             )}
           </div>

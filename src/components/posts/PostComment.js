@@ -59,10 +59,11 @@ const PostComment = ({ comment: { _id, likes, text, replies, user }, postId }) =
               <span onClick={toggleReply} className="action"> reply </span>
               <span className="space-dot">&middot;</span>
               <span className="action">{ likes.length } likes </span>
+              
               { userId === myprofile.user._id && (
                   <Fragment>
                     <span className="space-dot">&middot;</span>
-                    <span onClick={() => removeComment(postId, _id)} className="action"> remove comment </span>
+                    <span onClick={() => removeComment(postId, _id)} className="action"> remove </span>
                   </Fragment>
                 )}
             </div>

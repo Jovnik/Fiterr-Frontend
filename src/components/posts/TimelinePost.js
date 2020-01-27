@@ -15,16 +15,18 @@ import PostContext from '../../context/post/postContext';
 import { likesText } from '../../utils/Utils';
 
 
-const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUser }}) => {
+const TimelinePost = ({ post: { _id, content, image, date, comments, likes, postOwnerUser }}) => {
 
     const { _id: userId, firstname, lastname, profile: { displayImage }} = postOwnerUser;
 
     const dropdownEl = useRef(null);
-    const { like, unlike, removePost } = useContext(PostContext);
+    const { like, unlike, removePost, editPost } = useContext(PostContext);
     const { profile: myprofile } = useContext(ProfileContext);
 
     // check if we have liked it or not
     const [liked, setLiked] = useState(likes.map(like => like.user).includes(myprofile.user._id));
+    const [edit, toggleEdit] = useState(false);
+    const [editText, setEditText] = useState(content);
 
     const onLikeClick = () => {
       if (liked) {
@@ -36,9 +38,25 @@ const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUs
       }
     }
 
+    const onChange = (e) => {
+      setEditText(e.target.value);
+    }
+
+    const onPostRemove = (e) => {
+      removePost(_id);
+      postOptionsDropdownRemove();
+    }
+
+    const onEditSubmit = (e) => {
+      e.preventDefault();
+      console.log('we saved the new stuff');
+      editPost(_id, { editText });
+      toggleEdit(false);
+      postOptionsDropdownRemove();
+    }
+
     const postOptionsDropdownHandler = (e) => {
       // console.log(dropdownEl);
-
       if (dropdownEl.current.style.display === "none") {
         dropdownEl.current.style.display = "flex";
       } else if (dropdownEl.current.style.display === "flex") {
@@ -74,7 +92,7 @@ const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUs
                 </div>
               </div>
             </div>
-              { myprofile.user._id === userId && 
+            { myprofile.user._id === userId && 
               (<div className="post-options">
                 {/* <button type="button" className="btn-post-options" onClick={postOptionsDropdownHandler} onBlur={postOptionsDropdownRemove} > */}
                 <button type="button" className="btn-post-options" onClick={postOptionsDropdownHandler} >
@@ -83,20 +101,35 @@ const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUs
                 <div id="post-options-dropdown" ref={dropdownEl} style={{display: "none"}} className="options-dropdown-wrapper caret">
                   <div className="options-dropdown">
                     <ul>
-                      <li>edit post</li>
-                      <li onClick={() => removePost(_id)}>delete post</li>
+                      <li onClick={() => toggleEdit(!edit)}>edit post</li>
+                      <li onClick={onPostRemove}>delete post</li>
                     </ul>
                   </div>
                 </div>
-              </div>)}
+            </div>)}
+
           </div>
           <div className="body">
             <div className="post-content">
-              <span>
-                { content }
-              </span>
+              {edit ? (
+                <form>
+                  <input type="text" name="" value={editText} onChange={onChange} id=""/>
+                  <button onClick={onEditSubmit}>Save</button>
+                </form>
+              ) : (
+                <span>
+                  { content }
+                </span>
+              )}
+
+              { image && (
+                <div className="image-upload">
+                  <img src={image} alt=""/>
+                </div>
+              )}
             </div>
           </div>
+
           <div className="post-actions-wrapper post-actions-info">
             <div className="social-actions">
               <div className="icon-wrapper like">

@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 import pageImg1 from '../../components/assets/media/logo-paul_meier_fitness-1080x1080.png';
 
-const PageBodyWidgets = () => {
+const PageBodyWidgets = ({ page: { pageAbout } }) => {
     return (
       <>
         {/* RIGHT COL - PROFILE INFO WIDGETS */}
@@ -17,7 +17,7 @@ const PageBodyWidgets = () => {
                 <h3> about </h3>
               </div>
               <div className="body no-info">
-                <p>nothing to display</p>
+                <p>{ pageAbout }</p>
               </div>
             </div>
             <div className="widget-wrapper">
@@ -27,9 +27,6 @@ const PageBodyWidgets = () => {
                 </div>
                 <h3> our personal trainers </h3>
               </div>
-              {/* <div className="body no-info">
-                <p>nothing to display</p>
-              </div> */}
               <div className="body thumbnails">
                 <Link to='/' className="thumbnail-widget recomended">
                   <div className="page-image">

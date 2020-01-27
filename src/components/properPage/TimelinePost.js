@@ -1,7 +1,7 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
-import TextareaAutosize from 'react-autosize-textarea';
+// import TextareaAutosize from 'react-autosize-textarea';
 
 import PostComment from '../posts/PostComment';
 import NewComment from '../posts/NewComment';
@@ -10,17 +10,25 @@ import stockIMG from '../assets/media/stockIMG.jpg';
 
 
 // contexts
-import AuthContext from '../../context/auth/authContext';
+// import AuthContext from '../../context/auth/authContext';
 import ProfileContext from '../../context/profile/profileContext';
 import PostContext from '../../context/post/postContext';
+import PageContext from '../../context/page/pageContext';
 
 import { likesText } from '../../utils/Utils';
 
 
 const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUser }}) => {
 
-    const { _id: userId, firstname, lastname, profile: { displayImage }} = postOwnerUser;
+    const { _id: userId } = postOwnerUser;
 
+    
+    const { currentPage } = useContext(PageContext);
+
+    // eslint-disable-next-line
+    const { pageHandle, pageTitle, displayImage } = currentPage;
+
+    console.log('post current page', currentPage);
     const { like, unlike, removePost } = useContext(PostContext);
     const { profile: myprofile } = useContext(ProfileContext);
 
@@ -33,17 +41,11 @@ const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUs
     const onLikeClick = () => {
       if (liked) {
         unlike(_id);
-        console.log('unliking');
         setLiked(false);
       } else {
         like(_id)
-        console.log('liking');
         setLiked(true);
       }
-    }
-
-    const clickclick = () => {
-      console.log('been clicked');
     }
 
     const postOptionsDropdownHandler = (e) => {
@@ -69,7 +71,7 @@ const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUs
             </div>
             <div className="post-info">
               <div className="post-title">
-                <h3><Link to='/'>{`${firstname} ${lastname}`}</Link> <span>made a post</span></h3>
+                <h3><Link to='/'>{`${pageTitle}`}</Link> <span>made a post</span></h3>
               </div>
               <div className="post-date">
                 <div className="date">
@@ -148,10 +150,10 @@ const TimelinePost = ({ post: { _id, content, date, comments, likes, postOwnerUs
   
             
             {comments.map(comment => (
-              <PostComment key={comment._id} comment={comment} postId={_id} />
+              <PostComment key={comment._id} comment={comment} postId={_id} page={currentPage}/>
             ))}
   
-            <NewComment postId={_id} />
+            <NewComment postId={_id} page={currentPage} />
 
           </div>
         </div>

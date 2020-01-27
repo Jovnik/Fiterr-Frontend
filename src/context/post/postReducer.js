@@ -1,6 +1,7 @@
 import { 
     GET_NEWSFEED,
     REMOVE_POST, 
+    EDIT_POST,
     CLEAR_POST_STATE, 
     UPDATE_POSTS, 
     UPDATE_LIKES ,
@@ -39,6 +40,12 @@ export default (state, action) => {
             return {
                 ...state,
                 posts: state.posts.filter(post => post._id !== action.payload)
+            }
+        case EDIT_POST:
+            return {
+                ...state,
+                posts: state.posts.map(post => post._id === action.payload.postId ? { ...post, content: action.payload.editedText } : post)
+                // posts: state.posts.map(post => post._id === action.payload.postId ? action.payload.editedPost : post)
             }
         case ADD_COMMENT:
             index = state.posts.findIndex(post => post._id === action.payload.postId);
